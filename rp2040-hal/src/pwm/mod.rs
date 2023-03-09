@@ -432,6 +432,22 @@ where
             write_bitmask_clear(reg, self.bitmask());
         }
     }
+
+    pub fn dyn_split(self) -> (
+        DynSlice,
+        DynChannel,
+        DynChannel,
+     ) {
+        let slice: DynSlice = unsafe { DynSlice::new(I::DYN, M::DYN) };
+        let channel_a: DynChannel = self.channel_a.into();
+        let channel_b: DynChannel = self.channel_b.into();
+
+        (
+            slice,
+            channel_a,
+            channel_b,
+        )
+    }
 }
 
 macro_rules! pwm {

@@ -55,22 +55,17 @@ impl DynSliceRegisters {
 pub struct DynSlice {
     regs: DynSliceRegisters,
     mode: DynSliceMode,
-    pub channel_a: DynChannel,
-    pub channel_b: DynChannel,
 }
 
 impl DynSlice {
     #[inline]
-    unsafe fn new(
+    pub unsafe fn new(
         id: DynSliceId,
         mode: DynSliceMode,
-        channel_a: DynChannel,
-        channel_b: DynChannel) -> Self {
+    ) -> Self {
         DynSlice {
             regs: DynSliceRegisters::new(id),
             mode,
-            channel_a,
-            channel_b,
         }
     }
 
@@ -242,8 +237,8 @@ where
     M: SliceMode + ValidSliceMode<I>,
 {
     #[inline]
-    fn from(slice: Slice<I, M>) -> Self {
-        unsafe { DynSlice::new(I::DYN, M::DYN, slice.channel_a.into(), slice.channel_b.into()) }
+    fn from(_slice: Slice<I, M>) -> Self {
+        unsafe { DynSlice::new(I::DYN, M::DYN) }
     }
 }
 
